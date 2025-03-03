@@ -145,9 +145,34 @@ class Data:
         
         Returns nothing but appends on the data the ema 
         """
-        factor = 2 / (period + 1)
-        for i in range(len(self.data)):
-            if i == 0:
-                self.data[i][f"ema_{period}"] = 0
-            else:
-                self.data[i][f"ema_{period}"] = factor * self.data[i]["close"] + (1 - factor) * self.data[i - 1][f"ema_{period}"]
+        #Performace Improvement: Checks if the EMA was already Calculated
+        try:
+            self.data[0][f"ema_{period}"]
+        except:
+            factor = 2 / (period + 1)
+            for i in range(len(self.data)):
+                if i == 0:
+                    self.data[i][f"ema_{period}"] = 0
+                else:
+                    self.data[i][f"ema_{period}"] = factor * self.data[i]["close"] + (1 - factor) * self.data[i - 1][f"ema_{period}"]
+
+    def get_candles_from_index(self, index, amount):
+        return self.data[index - amount - 1:index - 1]
+
+    def candle_low(self, index, amount):
+        data = self.get_candles_from_index(index, amount)
+        low = 999999999999999
+        for row in data:
+            if row["low"] < low:
+                low = row["low"]
+        
+        return low
+    
+    def candle_high(self, index, amount):
+        data = self.get_candles_from_index(index, amount)
+        high = 0
+        for row in data:
+            if row["high"] > high:
+                high = row["high"]
+        
+        return high
