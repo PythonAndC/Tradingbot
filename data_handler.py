@@ -133,3 +133,21 @@ class Data:
 
         file.close()
         print("Data Saved")
+
+    def calc_ema(self, period):
+        """
+        ### Explanation:\n
+        Calculates the EMA (Exponential Moving Average) by the given period.\n
+        
+        ### Definition:\n
+        a = 2 / (period + 1)\n
+        ema = a * close + (1 - a) * oldEMA\n
+        
+        Returns nothing but appends on the data the ema 
+        """
+        factor = 2 / (period + 1)
+        for i in range(len(self.data)):
+            if i == 0:
+                self.data[i][f"ema_{period}"] = 0
+            else:
+                self.data[i][f"ema_{period}"] = factor * self.data[i]["close"] + (1 - factor) * self.data[i - 1][f"ema_{period}"]
