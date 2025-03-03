@@ -1,4 +1,8 @@
 class Order:
+    """
+    Holds the important inforamtion of an order.\n
+    Has the Ability to check the Orders
+    """
     def __init__(self, type, open_timestamp, open, take_profit, stop_loss, risk):
         self.type = type
         self.open_timestamp = open_timestamp
@@ -20,6 +24,11 @@ class Order:
         self.finished = False
     
     def check(self, timestamp, high, low):
+        """
+        Checks the Orders based on the given high and low.
+        ### Important Note
+        Checks first if the Order reached the Stoploss before Takeprofit.
+        """
         if self.type:
             if low <= self.stop_loss:
                 self.close_timestamp = timestamp
@@ -72,6 +81,10 @@ class Order:
             return f"Short Open/Close Timestamp: {self.open_timestamp} {self.close_timestamp} Open: {self.open} TP: {self.take_profit} SL: {self.stop_loss} Profit: {self.overall_profit}"
         
 class Orders:
+    """
+    Holds all relevant data to all Orders.\n
+    Manages the Orders and keeps track of successful and failed orders.
+    """
     def __init__(self):
         self.open_orders: list[Order] = []
         self.closed_orders: list[Order] = []
