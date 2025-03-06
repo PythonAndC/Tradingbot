@@ -122,7 +122,7 @@ class Data:
         The format is:\n
         Timestamp Open High Low Close Volume
         """
-        with open(f"Data/{self.symbol}_{self.timeframe.value}", "w") as file:
+        with open(f"Data/{self.symbol}_{self.timeframe.value}.txt", "w") as file:
             counter = 0
             for row in self.data:
                 file.write(f'{row["timestamp"]} {row["open"]} {row["high"]} {row["low"]} {row["close"]} {row["volume"]}')

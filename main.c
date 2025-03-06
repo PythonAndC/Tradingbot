@@ -11,7 +11,7 @@
 #define DATALENGTH 193928
 #define NUM_THREADS 4
 #define OUTPUT true
-#define FILENAME "data/ETHUSDT_30m.txt"
+#define FILENAME "Data/ETHUSDT_4H.txt"
 
 #define RISK 1.0
 
@@ -53,7 +53,6 @@ double backtest(Data *data, int dataLength, int fastPeriod, int slowPeriod, int 
 
     // Would be exported to the optimizer to bring greater performance
     calcEma(data, dataLength, fastPeriod, slowPeriod);
-    calcRSI(data, dataLength, 14);
 
     // Is important because otherwise the execuation of the orders are determined by false calculations
     int lowest;
